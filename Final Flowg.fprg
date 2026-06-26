@@ -1,0 +1,413 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Christian Jay"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-05-23 02:34:45 pm"/>
+        <attribute name="created" value="Q2hyaXN0aWFuIEpheTtMQVBUT1AtRUg0STJWS0w7MjAyNC0wMy0xOTsxMjo0Nzo1OSBwbTszNjc2"/>
+        <attribute name="edited" value="Q2hyaXN0aWFuIEpheTtMQVBUT1AtRUg0STJWS0w7MjAyNC0wNS0yMzswMjozNDo0NSBwbTsxNTszODI0"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="vectorPlayers" type="String" array="True" size="100"/>
+            <declare name="playerloop" type="Integer" array="False" size=""/>
+            <declare name="scoreoverall, scorepercent" type="Real" array="True" size="100"/>
+            <declare name="nameindex" type="Integer" array="True" size="100"/>
+            <declare name="invalid" type="Integer" array="False" size=""/>
+            <declare name="play" type="String" array="False" size=""/>
+            <do expression="play!=&quot;Y&quot;&amp;&amp;play!=&quot;N&quot;">
+                <output expression="&quot;Display Main Menu &quot;" newline="True"/>
+                <input variable="play"/>
+                <if expression="play=&quot;p&quot;">
+                    <then>
+                        <do expression="invalid==1">
+                            <call expression="Addplayer(Playerloop,vectorPlayers)"/>
+                            <if expression="Playerloop==1">
+                                <then>
+                                    <breakpoint expression="" always="True"/>
+                                </then>
+                                <else/>
+                            </if>
+                            <assign variable="Invalid" expression="Find(Playerloop,vectorPlayers)"/>
+                            <if expression="invalid==1">
+                                <then>
+                                    <output expression="&quot;Player already exists&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <breakpoint expression="" always="True"/>
+                                </else>
+                            </if>
+                        </do>
+                        <output expression="&quot;Instructions&quot;" newline="True"/>
+                        <declare name="Easy, Normal, Hard, Percent, Total, Allmistakes, loop" type="Integer" array="False" size=""/>
+                        <declare name="Percentage, overall, Allscore" type="Real" array="False" size=""/>
+                        <declare name="category" type="String" array="False" size=""/>
+                        <declare name="again" type="String" array="False" size=""/>
+                        <do expression="again==&quot;Y&quot;|| again==&quot;y&quot;">
+                            <do expression="category!=&quot;1&quot; &amp;&amp; category!=&quot;2&quot; &amp;&amp; category!=&quot;3&quot;">
+                                <output expression="&quot;Categories&quot;" newline="True"/>
+                                <input variable="category"/>
+                                <if expression="category==&quot;1&quot;">
+                                    <then>
+                                        <output expression="&quot;Easy&quot;" newline="True"/>
+                                        <assign variable="Easy" expression="EasyLevel()"/>
+                                    </then>
+                                    <else/>
+                                </if>
+                                <if expression="category==&quot;2&quot;">
+                                    <then>
+                                        <output expression="&quot;Normal&quot;" newline="True"/>
+                                        <assign variable="Normal" expression="NormalLevel()"/>
+                                    </then>
+                                    <else/>
+                                </if>
+                                <if expression="category==&quot;3&quot;">
+                                    <then>
+                                        <output expression="&quot;Hard&quot;" newline="True"/>
+                                        <assign variable="Hard" expression="HardLevel()"/>
+                                    </then>
+                                    <else/>
+                                </if>
+                                <if expression="category!=&quot;1&quot; &amp;&amp; category!=&quot;2&quot; &amp;&amp; category!=&quot;3&quot;">
+                                    <then>
+                                        <output expression="&quot;Invalid Category.&quot;" newline="True"/>
+                                    </then>
+                                    <else/>
+                                </if>
+                                <if expression="category==&quot;1&quot; || category==&quot;2&quot; || category==&quot;3&quot;">
+                                    <then>
+                                        <output expression="&quot;Assigning of Values: loop,overall,Total,correctscore,Allmistakes, Percent variables&quot;" newline="True"/>
+                                        <output expression="&quot;Display Results: Total Correct Score,Total Mistakes,Score Percent&quot;" newline="True"/>
+                                        <assign variable="scoreoverall" expression="&quot;Total Score&quot;"/>
+                                        <assign variable="scorepercent" expression="&quot;Overall Percent&quot;"/>
+                                    </then>
+                                    <else/>
+                                </if>
+                            </do>
+                            <do expression="true">
+                                <output expression="&quot;Play another level? Y/N&quot;" newline="True"/>
+                                <input variable="again"/>
+                                <if expression="again==&quot;Y&quot;">
+                                    <then>
+                                        <breakpoint expression="" always="True"/>
+                                    </then>
+                                    <else/>
+                                </if>
+                                <if expression="again==&quot;N&quot;">
+                                    <then>
+                                        <output expression="&quot;Return to Main Menu./Log out the player.&quot;" newline="True"/>
+                                        <breakpoint expression="" always="True"/>
+                                    </then>
+                                    <else>
+                                        <output expression="&quot;Invalid Option&quot;" newline="True"/>
+                                    </else>
+                                </if>
+                            </do>
+                        </do>
+                        <assign variable="Playerloop" expression="PLayerloop+1"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="play==&quot;R&quot;">
+                    <then>
+                        <call expression="sorter(scoreoverall,Playerloop,nameindex)"/>
+                        <call expression="toFile(scoreoverall,nameindex,Playerloop,vectorPlayers)"/>
+                        <call expression="sorter(scorepercent,Playerloop,nameindex)"/>
+                        <call expression="toFilePer(scoreoverall,nameindex,Playerloop,vectorPlayers)"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="play==&quot;S&quot;">
+                    <then>
+                        <call expression="sorter(scoreoverall,Playerloop,nameindex)"/>
+                        <call expression="toFile(scoreoverall,nameindex,Playerloop,vectorPlayers)"/>
+                        <call expression="sorter(scorepercent,Playerloop,nameindex)"/>
+                        <call expression="toFilePer(scoreoverall,nameindex,Playerloop,vectorPlayers)"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="play=&quot;N&quot;">
+                    <then>
+                        <output expression="&quot;Exiting Game...&quot;" newline="True"/>
+                        <breakpoint expression="" always="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="play!=&quot;Y&quot;&amp;&amp;play!=&quot;N&quot;&amp;&amp;play!=&quot;R&quot;">
+                    <then>
+                        <output expression="&quot;Invalid Option.&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </do>
+        </body>
+    </function>
+    <function name="Addplayer" type="None" variable="">
+        <parameters>
+            <parameter name="Count" type="Integer" array="False"/>
+            <parameter name="Player" type="String" array="False"/>
+        </parameters>
+        <body>
+            <comment text="'Player' variable is structured and vectored.Basing on the 'count' variable"/>
+            <output expression="&quot;Enter Player Name/Age/ID&quot;" newline="True"/>
+            <input variable="Player"/>
+        </body>
+    </function>
+    <function name="EasyLevel" type="Integer" variable="scoreEasy">
+        <parameters/>
+        <body>
+            <declare name="scoreEasy, i" type="Integer" array="False" size=""/>
+            <declare name="answer" type="String" array="False" size=""/>
+            <for variable="i" start="1" end="10" direction="inc" step="1">
+                <comment text="adds another if condition in each iteration of i for every question. "/>
+                <if expression="i==1">
+                    <then>
+                        <assign variable="scoreEasy" expression="0"/>
+                        <output expression="&quot;Question &quot;&amp;i" newline="True"/>
+                        <input variable="answer"/>
+                        <if expression="Answer==&quot;correct&quot;">
+                            <then>
+                                <output expression="&quot;Correct&quot;" newline="True"/>
+                                <assign variable="scoreEasy" expression="scoreEasy+1"/>
+                            </then>
+                            <else>
+                                <output expression="&quot;Incorrect&quot;" newline="True"/>
+                                <output expression="&quot;Correct Answer&quot;" newline="True"/>
+                            </else>
+                        </if>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="i==10">
+                    <then>
+                        <output expression="&quot;Question &quot;&amp;i" newline="True"/>
+                        <input variable="answer"/>
+                        <if expression="Answer==&quot;correct&quot;">
+                            <then>
+                                <output expression="&quot;Correct&quot;" newline="True"/>
+                                <assign variable="scoreEasy" expression="scoreEasy+1"/>
+                            </then>
+                            <else>
+                                <output expression="&quot;Incorrect&quot;" newline="True"/>
+                                <output expression="&quot;Correct Answer&quot;" newline="True"/>
+                            </else>
+                        </if>
+                        <declare name="mistakes" type="Integer" array="False" size=""/>
+                        <assign variable="mistakes" expression="10-scoreEasy"/>
+                        <output expression="&quot;Mistakes: &quot;&amp;mistakes" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <output expression="&quot;Score: &quot;&amp;scoreEasy&amp;&quot;/10&quot;" newline="True"/>
+            </for>
+        </body>
+    </function>
+    <function name="Find" type="Integer" variable="0 or 1">
+        <parameters>
+            <parameter name="Count" type="Integer" array="False"/>
+            <parameter name="playersID" type="String" array="False"/>
+        </parameters>
+        <body>
+            <declare name="i, j" type="Integer" array="False" size=""/>
+            <for variable="i" start="0" end="Count-1" direction="inc" step="1">
+                <for variable="j" start="i+1" end="Count" direction="inc" step="1">
+                    <if expression="playersID[i]==playersID[j]">
+                        <then>
+                            <output expression="&quot;Return value 1&quot;" newline="True"/>
+                            <breakpoint expression="" always="True"/>
+                        </then>
+                        <else/>
+                    </if>
+                </for>
+            </for>
+            <output expression="&quot;Return value 0&quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="HardLevel" type="Integer" variable="scoreHard">
+        <parameters/>
+        <body>
+            <declare name="scoreHard" type="Integer" array="False" size=""/>
+            <declare name="answer" type="String" array="False" size=""/>
+            <for variable="i" start="1" end="10" direction="inc" step="1">
+                <comment text="adds another if condition in each iteration of i for every question. "/>
+                <if expression="i==1">
+                    <then>
+                        <assign variable="scoreHard" expression="0"/>
+                        <output expression="&quot;Question &quot;&amp;i" newline="True"/>
+                        <input variable="answer"/>
+                        <if expression="Answer==&quot;correct&quot;">
+                            <then>
+                                <output expression="&quot;Correct&quot;" newline="True"/>
+                                <assign variable="scoreHard" expression="scoreHard+1"/>
+                            </then>
+                            <else>
+                                <output expression="&quot;Incorrect&quot;" newline="True"/>
+                                <output expression="&quot;Correct Answer&quot;" newline="True"/>
+                            </else>
+                        </if>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="i==10">
+                    <then>
+                        <output expression="&quot;Question &quot;&amp;i" newline="True"/>
+                        <input variable="answer"/>
+                        <if expression="Answer==&quot;correct&quot;">
+                            <then>
+                                <output expression="&quot;Correct&quot;" newline="True"/>
+                                <assign variable="scoreHard" expression="scoreHard+1"/>
+                            </then>
+                            <else>
+                                <output expression="&quot;Incorrect&quot;" newline="True"/>
+                                <output expression="&quot;Correct Answer&quot;" newline="True"/>
+                            </else>
+                        </if>
+                        <declare name="mistakes" type="Integer" array="False" size=""/>
+                        <assign variable="mistakes" expression="10-scoreHard"/>
+                        <output expression="&quot;Mistakes: &quot;&amp;mistakes" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <output expression="&quot;Score: &quot;&amp;scoreHard&amp;&quot;/10&quot;" newline="True"/>
+            </for>
+        </body>
+    </function>
+    <function name="NormalLevel" type="Integer" variable="scoreNormal">
+        <parameters/>
+        <body>
+            <declare name="scoreNormal, i" type="Integer" array="False" size=""/>
+            <declare name="answer" type="String" array="False" size=""/>
+            <for variable="i" start="1" end="10" direction="inc" step="1">
+                <comment text="adds another if condition in each iteration of i for every question. "/>
+                <if expression="i==1">
+                    <then>
+                        <assign variable="scoreNormal" expression="0"/>
+                        <output expression="&quot;Question &quot;&amp;i" newline="True"/>
+                        <input variable="answer"/>
+                        <if expression="Answer==&quot;correct&quot;">
+                            <then>
+                                <output expression="&quot;Correct&quot;" newline="True"/>
+                                <assign variable="scoreNormal" expression="scoreNormal+1"/>
+                            </then>
+                            <else>
+                                <output expression="&quot;Incorrect&quot;" newline="True"/>
+                                <output expression="&quot;Correct Answer&quot;" newline="True"/>
+                            </else>
+                        </if>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="i==10">
+                    <then>
+                        <output expression="&quot;Question &quot;&amp;i" newline="True"/>
+                        <input variable="answer"/>
+                        <if expression="Answer==&quot;correct&quot;">
+                            <then>
+                                <output expression="&quot;Correct&quot;" newline="True"/>
+                                <assign variable="scoreNormal" expression="scoreNormal+1"/>
+                            </then>
+                            <else>
+                                <output expression="&quot;Incorrect&quot;" newline="True"/>
+                                <output expression="&quot;Correct Answer&quot;" newline="True"/>
+                            </else>
+                        </if>
+                        <declare name="mistakes" type="Integer" array="False" size=""/>
+                        <assign variable="mistakes" expression="10-scoreNormal"/>
+                        <output expression="&quot;Mistakes: &quot;&amp;mistakes" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <output expression="&quot;Score: &quot;&amp;scoreNormal&amp;&quot;/10&quot;" newline="True"/>
+            </for>
+        </body>
+    </function>
+    <function name="Sorter" type="None" variable="">
+        <parameters>
+            <parameter name="Arr" type="Real" array="False"/>
+            <parameter name="ArraySize" type="Integer" array="False"/>
+            <parameter name="Index" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="val, Max, Maxidx, temp, index, i, j, ii" type="Integer" array="False" size=""/>
+            <for variable="ii" start="o" end="ArraySize" direction="inc" step="1">
+                <output expression="&quot;Assign Value to Index&quot;" newline="True"/>
+                <assign variable="Arr[ii]" expression="ii"/>
+            </for>
+            <for variable="i" start="0" end="ArraySize-1" direction="inc" step="1">
+                <output expression="&quot;Assign value to Max and Maxidx&quot;" newline="True"/>
+                <assign variable="Max" expression="Arr[i]"/>
+                <assign variable="Maxidx" expression="temp"/>
+                <for variable="j" start="i" end="ArraySize" direction="inc" step="1">
+                    <if expression="Arr[j]&gt;Max">
+                        <then>
+                            <output expression="&quot;New value for Maximum&quot;" newline="True"/>
+                            <assign variable="Max" expression="Arr[i]"/>
+                            <assign variable="Maxidx" expression="j"/>
+                        </then>
+                        <else/>
+                    </if>
+                </for>
+                <if expression="Max&gt;Arr[i]">
+                    <then>
+                        <output expression="&quot;Assigning of values in array in variables: temp/ Arr[i]/ Arr[Maxidx]/ indexes[i]&quot;" newline="True"/>
+                        <output expression="&quot;Assigning of value referring to index.Variables: Index/ indexes[Maxidx]/ indexes[j]&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </for>
+        </body>
+    </function>
+    <function name="toFile" type="None" variable="">
+        <parameters>
+            <parameter name="Arrvalue" type="String" array="False"/>
+            <parameter name="Arrindex" type="Integer" array="False"/>
+            <parameter name="number" type="Integer" array="False"/>
+            <parameter name="Player" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <open expression="Finale" mode="write"/>
+            <for variable="i" start="0" end="number-1" direction="inc" step="1">
+                <output expression="&quot;Save player rankings of overall score to file Finale&quot;" newline="True"/>
+                <write expression="&quot;Write Score,Rank,and name to file&quot;"/>
+            </for>
+            <close/>
+            <open expression="Finale" mode="read"/>
+            <for variable="i" start="0" end="number-1" direction="inc" step="1">
+                <read variable="Arrvalue"/>
+                <read variable="arrindex"/>
+                <read variable="number"/>
+                <read variable="players"/>
+                <output expression="&quot;Display the contents of file Finale&quot;" newline="True"/>
+            </for>
+            <close/>
+        </body>
+    </function>
+    <function name="toFilePer" type="None" variable="">
+        <parameters>
+            <parameter name="Arrvalue" type="String" array="False"/>
+            <parameter name="Arrindex" type="Integer" array="False"/>
+            <parameter name="number" type="Integer" array="False"/>
+            <parameter name="Player" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <open expression="Finale" mode="write"/>
+            <comment text="appended"/>
+            <for variable="i" start="0" end="number-1" direction="inc" step="1">
+                <output expression="&quot;Save player rankings of score percentage to file Finale&quot;" newline="True"/>
+                <write expression="&quot;Write Score,Rank,and name to file&quot;"/>
+            </for>
+            <close/>
+            <open expression="Finale" mode="read"/>
+            <for variable="i" start="0" end="number-1" direction="inc" step="1">
+                <read variable="Arrvalue"/>
+                <read variable="arrindex"/>
+                <read variable="number"/>
+                <read variable="players"/>
+                <output expression="&quot;Display the contents of file Finale&quot;" newline="True"/>
+            </for>
+            <close/>
+        </body>
+    </function>
+</flowgorithm>
